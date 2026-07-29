@@ -1,1 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khachatryan Web - Design · Development · Solutions</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.0/index.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green: #6b9b7e;
+  --green-light: #8fbf9f;
+  --green-dark: #3d6b4e;
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --text: #e8e8e8;
+  --text-muted: #888;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 3px; }
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.4s, backdrop-filter 0.4s;
+}
+
+nav.scrolled {
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(107,155,126,0.15);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-logo svg { width: 40px; height: 40px; }
+
+.nav-logo-text {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--green);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover { color: var(--green-light); }
+.nav-links a:hover::after { width: 100%; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+
+/* Sections */
+section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.section-number {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+/* Hero Section */
+.hero {
+  padding: 120px 60px 60px;
+}
+
+.hero-content {
+  max-width: 600px;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 30px;
+}
+
+.hero h1 .highlight {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.hero-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 55%;
+  background: url('https://image.qwenlm.ai/public_source/55416d68-561d-4d82-a8b6-72b46ce99303/1035a08c6-0833-4f27-84c1-e6d81d1588b2.png') center/cover no-repeat;
+  mask-image: linear-gradient(to right, transparent, black 30%);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 30%);
+  opacity: 0.7;
+}
+
+/* Services Section */
+.services {
+  padding: 120px 60px 60px;
+  background: var(--bg-card);
+}
+
+.services-inner {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.services-text { flex: 1; }
+
+.services-text h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  margin-bottom: 40px;
+  line-height: 1.2;
+}
+
+.services-text h2 .highlight { color: var(--green); font-weight: 600; }
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.service-item:hover { transform: translateX(10px); }
+
+.service-icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(107,155,126,0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.service-item:hover .service-icon {
+  background: rgba(107,155,126,0.15);
+  border-color: var(--green);
+}
+
+.service-icon svg { width: 22px; height: 22px; stroke: var(--green); fill: none; }
+
+.service-label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.services-image {
+  flex: 1;
+  position: relative;
+}
+
+.services-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* Why Section */
+.why {
+  padding: 120px 60px 60px;
+  background: var(--bg);
+}
+
+.why-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.why h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  margin-bottom: 60px;
+  line-height: 1.2;
+}
+
+.why h2 .highlight { color: var(--green); font-weight: 600; }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.why-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 30px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  transition: all 0.4s;
+  cursor: default;
+}
+
+.why-card:hover {
+  background: rgba(107,155,126,0.08);
+  border-color: rgba(107,155,126,0.3);
+  transform: translateY(-4px);
+}
+
+.why-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(107,155,126,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.why-icon svg { width: 24px; height: 24px; stroke: var(--green); fill: none; }
+
+.why-card h3 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Portfolio Section */
+.portfolio {
+  padding: 120px 60px 60px;
+  background: var(--bg-card);
+}
+
+.portfolio-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.portfolio h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  margin-bottom: 50px;
+  line-height: 1.2;
+}
+
+.portfolio h2 .highlight { color: var(--green); font-weight: 600; }
+
+.portfolio-showcase {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+.portfolio-showcase img {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s;
+}
+
+.portfolio-showcase:hover img { transform: scale(1.03); }
+
+.portfolio-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+
+.portfolio-overlay h3 {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.portfolio-overlay p {
+  color: var(--green);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Process Section */
+.process {
+  padding: 120px 60px 60px;
+  background: var(--bg);
+}
+
+.process-inner {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.process-text { flex: 1; }
+
+.process-text h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  margin-bottom: 50px;
+  line-height: 1.2;
+}
+
+.process-text h2 .highlight { color: var(--green); font-weight: 600; }
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 0;
+  position: relative;
+}
+
+.process-step::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 50px;
+  bottom: -20px;
+  width: 1px;
+  background: rgba(107,155,126,0.2);
+}
+
+.process-step:last-child::before { display: none; }
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(107,155,126,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green);
+  flex-shrink: 0;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.process-step:hover .step-number {
+  background: var(--green);
+  color: #fff;
+}
+
+.step-content h4 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.process-image { flex: 1; }
+
+.process-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* CTA Section */
+.cta {
+  padding: 120px 60px 60px;
+  background: var(--bg-card);
+  text-align: center;
+  justify-content: center;
+}
+
+.cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta h2 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.cta h2 .highlight { color: var(--green); font-weight: 600; }
+
+.cta p {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 18px 50px;
+  background: var(--green);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.4s;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s;
+}
+
+.cta-btn:hover::before { left: 100%; }
+
+.cta-btn:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(107,155,126,0.3);
+}
+
+.cta-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+/* Footer */
+footer {
+  padding: 40px 60px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo svg { width: 30px; height: 30px; }
+
+.footer-logo span {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--green); }
+
+/* Arrow indicator */
+.section-arrow {
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-arrow svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--green);
+  fill: none;
+  animation: arrowBounce 2s infinite;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+
+/* Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Floating particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: float linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.15; }
+  90% { opacity: 0.15; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* Logo animation */
+.logo-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLogo 2s ease forwards;
+}
+
+@keyframes drawLogo {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100vh;
+  background: rgba(10,10,10,0.98);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  transition: right 0.4s ease;
+}
+
+.mobile-menu.open { right: 0; }
+
+.mobile-menu a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 20px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+
+.mobile-menu a:hover { color: var(--green); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  
+  .hero { padding: 100px 30px 60px; }
+  .hero-image { width: 100%; opacity: 0.3; }
+  
+  .services { padding: 100px 30px 60px; }
+  .services-inner { flex-direction: column; gap: 40px; }
+  
+  .why { padding: 100px 30px 60px; }
+  .why-grid { grid-template-columns: 1fr; }
+  
+  .portfolio { padding: 100px 30px 60px; }
+  
+  .process { padding: 100px 30px 60px; }
+  .process-inner { flex-direction: column; gap: 40px; }
+  
+  .cta { padding: 100px 30px 60px; }
+  
+  footer { padding: 30px; flex-direction: column; gap: 20px; }
+  
+  .section-number { left: 20px; top: 20px; }
+  .section-arrow { right: 20px; bottom: 20px; }
+}
+
+@media (max-width: 600px) {
+  nav { padding: 15px 20px; }
+  .hero h1 { font-size: 32px; }
+  .services-text h2, .why h2, .portfolio h2, .process-text h2, .cta h2 { font-size: 28px; }
+}
+
+/* Glow effect */
+.glow-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0.3;
+}
+
+/* Counter animation */
+.counter-section {
+  display: flex;
+  gap: 60px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.counter-item {
+  text-align: center;
+}
+
+.counter-value {
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#6b9b7e" stroke-width="2.5"/>
+      <path d="M30 25 L30 75 L50 50 L70 75 L70 25" fill="none" stroke="#6b9b7e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 25 L50 50 L25 75" fill="none" stroke="#6b9b7e" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-logo-text">Khachatryan Web</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="#portfolio" onclick="toggleMenu()">Work</a>
+  <a href="#process" onclick="toggleMenu()">Process</a>
+  <a href="#cta" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <span class="section-number">01</span>
+  <div class="hero-content">
+    <h1 class="reveal">We Design<br><span class="highlight">Websites</span><br>That Work.</h1>
+    <p class="hero-sub reveal stagger-2">Modern design.<br>Smart solutions.<br>Real results.</p>
+    <div class="counter-section reveal stagger-3">
+      <div class="counter-item">
+        <div class="counter-value" data-target="150">0</div>
+        <div class="counter-label">Projects</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value" data-target="98">0</div>
+        <div class="counter-label">% Satisfaction</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value" data-target="5">0</div>
+        <div class="counter-label">Years Exp.</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image reveal-scale stagger-2"></div>
+  <div class="section-arrow">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+  <span class="section-number">02</span>
+  <div class="services-inner">
+    <div class="services-text">
+      <h2 class="reveal">What We<br><span class="highlight">Create</span></h2>
+      <div class="service-item reveal stagger-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <span class="service-label">Business Websites</span>
+      </div>
+      <div class="service-item reveal stagger-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <span class="service-label">Shopify Stores</span>
+      </div>
+      <div class="service-item reveal stagger-3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <span class="service-label">Landing Pages</span>
+      </div>
+      <div class="service-item reveal stagger-4">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <span class="service-label">Mobile Friendly</span>
+      </div>
+    </div>
+    <div class="services-image reveal-right stagger-2">
+      <img src="https://image.qwenlm.ai/public_source/55416d68-561d-4d82-a8b6-72b46ce99303/1035a08c6-0833-4f27-84c1-e6d81d1588b2.png" alt="Web Design">
+    </div>
+  </div>
+  <div class="section-arrow">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- Why Section -->
+<section class="why" id="why">
+  <span class="section-number">03</span>
+  <div class="why-inner">
+    <h2 class="reveal">Why A Website<br><span class="highlight">Matters?</span></h2>
+    <div class="why-grid">
+      <div class="why-card reveal stagger-1">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3>24/7 Online<br>Presence</h3>
+      </div>
+      <div class="why-card reveal stagger-2">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Build Trust<br>With Customers</h3>
+      </div>
+      <div class="why-card reveal stagger-3">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 5-9"/></svg>
+        </div>
+        <h3>Increase Sales<br>And Leads</h3>
+      </div>
+      <div class="why-card reveal stagger-4">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Stand Out From<br>The Competition</h3>
+      </div>
+    </div>
+  </div>
+  <div class="section-arrow">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="portfolio" id="portfolio">
+  <span class="section-number">04</span>
+  <div class="portfolio-inner">
+    <h2 class="reveal">Our Recent<br><span class="highlight">Work</span></h2>
+    <div class="portfolio-showcase reveal-scale stagger-2">
+      <img src="https://image.qwenlm.ai/public_source/55416d68-561d-4d82-a8b6-72b46ce99303/16c42ca1e-b8a9-43da-852d-7895bfbbbb7d.png" alt="Recent Work">
+      <div class="portfolio-overlay">
+        <h3>Premium Bedding Collection</h3>
+        <p>E-Commerce · Shopify · Responsive Design</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-arrow">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- Process Section -->
+<section class="process" id="process">
+  <span class="section-number">05</span>
+  <div class="process-inner">
+    <div class="process-text">
+      <h2 class="reveal">Our <span class="highlight">Process</span></h2>
+      <div class="process-steps">
+        <div class="process-step reveal stagger-1">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h4>Discovery</h4>
+            <p>Understanding your business & goals</p>
+          </div>
+        </div>
+        <div class="process-step reveal stagger-2">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h4>Planning</h4>
+            <p>Strategy, structure & content planning</p>
+          </div>
+        </div>
+        <div class="process-step reveal stagger-3">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h4>Design</h4>
+            <p>Modern UI/UX design</p>
+          </div>
+        </div>
+        <div class="process-step reveal stagger-4">
+          <div class="step-number">04</div>
+          <div class="step-content">
+            <h4>Development</h4>
+            <p>Clean code & powerful solutions</p>
+          </div>
+        </div>
+        <div class="process-step reveal stagger-5">
+          <div class="step-number">05</div>
+          <div class="step-content">
+            <h4>Launch</h4>
+            <p>Testing, support & go live</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-image reveal-right stagger-2">
+      <img src="https://image.qwenlm.ai/public_source/55416d68-561d-4d82-a8b6-72b46ce99303/123293c02-35ee-4c1b-94ff-bb77305e0617.png" alt="Process">
+    </div>
+  </div>
+  <div class="section-arrow">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta" id="cta">
+  <span class="section-number">06</span>
+  <div class="cta-inner">
+    <h2 class="reveal">Let's Build<br><span class="highlight">Something Amazing</span></h2>
+    <p class="reveal stagger-2">Have a project in mind?<br>Let's turn your ideas into a stunning website.</p>
+    <a href="#" class="cta-btn reveal stagger-3">DM Us</a>
+    <p class="cta-sub reveal stagger-4">For a free consultation</p>
+  </div>
+  <div class="glow-line"></div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#6b9b7e" stroke-width="2.5"/>
+      <path d="M30 25 L30 75 L50 50 L70 75 L70 25" fill="none" stroke="#6b9b7e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 25 L50 50 L25 75" fill="none" stroke="#6b9b7e" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <span>Khachatryan Web</span>
+  </div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Work</a>
+    <a href="#process">Process</a>
+    <a href="#cta">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Particles
+(function() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+    container.appendChild(p);
+  }
+})();
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  const spans = document.querySelectorAll('#hamburger span');
+  spans[0].style.transform = document.getElementById('mobileMenu').classList.contains('open') ? 'rotate(45deg) translate(5px, 5px)' : '';
+  spans[1].style.opacity = document.getElementById('mobileMenu').classList.contains('open') ? '0' : '1';
+  spans[2].style.transform = document.getElementById('mobileMenu').classList.contains('open') ? 'rotate(-45deg) translate(5px, -5px)' : '';
+}
+
+// Counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          el.textContent = target + (target === 98 ? '%' : '+');
+          clearInterval(timer);
+        } else {
+          el.textContent = Math.floor(current);
+        }
+      }, 25);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter-value').forEach(el => counterObserver.observe(el));
+
+// Smooth parallax on hero image
+window.addEventListener('scroll', () => {
+  const heroImg = document.querySelector('.hero-image');
+  if (heroImg) {
+    const scroll = window.scrollY;
+    heroImg.style.transform = `translateY(${scroll * 0.3}px)`;
+  }
+});
+</script>
+</body>
+</html>
 
